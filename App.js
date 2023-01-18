@@ -42,7 +42,7 @@ export default function App() {
   };
 
   const ListHeaderComponent = () => (
-    <View style={{ backgroundColor: COLOR.GRAY_3 }}>
+    <View style={{ backgroundColor: COLOR.GRAY_3, height: 250 }}>
       {/* 뒤로가기, 홈 아이콘 */}
       <View
         style={{
@@ -152,6 +152,18 @@ export default function App() {
     );
   };
 
+  const ItemSeparatorComponent = () => {
+    return (
+      <View
+        style={{ width: "100%", height: 1, backgroundColor: COLOR.GRAY_1 }}
+      ></View>
+    );
+  };
+
+  const ListFooterComponent = () => {
+    return <Margin height={10} />;
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       const newNow = dayjs();
@@ -171,6 +183,8 @@ export default function App() {
         ListHeaderComponent={ListHeaderComponent}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        ListFooterComponent={ListFooterComponent}
       />
     </View>
   );
