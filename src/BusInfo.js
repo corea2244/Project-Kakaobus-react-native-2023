@@ -23,6 +23,7 @@ export default ({
       >
         {/* 북마크 */}
         <BookmarkButton
+          size={20}
           isBookmarked={isBookmarked}
           onPress={onPress}
           style={{ paddingHorizontal: 10 }}

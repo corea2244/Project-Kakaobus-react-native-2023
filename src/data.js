@@ -5,6 +5,7 @@ export const busStop = {
   id: 23284,
   name: "강남역12번출구",
   directionDescription: "강남역.강남역사거리",
+  isBookmarked: true,
   buses: [
     {
       type: "B",
