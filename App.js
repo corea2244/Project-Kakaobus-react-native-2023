@@ -6,6 +6,7 @@ import {
   getBottomSpace,
 } from "react-native-iphone-x-helper";
 import BusInfo from "./src/BusInfo";
+import { COLOR } from "./src/color";
 import {
   busStop,
   getBusNumColorByType,
@@ -17,6 +18,22 @@ import {
 export default function App() {
   const sections = getSections(busStop.buses);
   const [now, setNow] = useState(dayjs());
+
+  const renderSectionHeader = ({ section: { title } }) => (
+    <View
+      style={{
+        paddingLeft: 13,
+        paddingVertical: 3,
+        backgroundColor: COLOR.GRAY_1,
+        borderTopWidth: 0.5,
+        borderBottomWidth: 0.5,
+        borderTopColor: COLOR.GRAY_2,
+        borderBottomColor: COLOR.GRAY_2,
+      }}
+    >
+      <Text style={{ color: COLOR.GRAY_4, fontSize: 12 }}>{title}</Text>
+    </View>
+  );
 
   const renderItem = ({ item: bus }) => {
     const numColor = getBusNumColorByType(bus.type);
@@ -84,7 +101,7 @@ export default function App() {
       <SectionList
         style={{ flex: 1, width: "100%" }}
         sections={sections}
-        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+        renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
       />
     </View>
