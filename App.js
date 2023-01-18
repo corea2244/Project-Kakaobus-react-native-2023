@@ -4,6 +4,7 @@ import {
   RefreshControl,
   SectionList,
   StyleSheet,
+  Switch,
   Text,
   TouchableOpacity,
   View,
@@ -24,6 +25,7 @@ import {
 } from "./src/data";
 import Margin from "./src/Margin";
 import BookmarkButton from "./src/BookmarkButton";
+import { useTheme } from "./src/use-theme";
 
 const busStopBookmarkSize = 20;
 const busStopBookmarkPadding = 6;
@@ -33,12 +35,14 @@ export default function App() {
   const [now, setNow] = useState(dayjs());
   const [refreshing, setRefreshing] = useState(false);
 
+  const { isDark, NEWCOLOR, toggleIsDark } = useTheme();
+
   const onPressBusStopBookmark = () => {};
 
   const TouchableHeaderIcon = ({ name, onPress }) => {
     return (
       <TouchableOpacity style={{ padding: 10 }}>
-        <SimpleLineIcons name={name} size={20} color={COLOR.WHITE} />
+        <SimpleLineIcons name={name} size={20} color={NEWCOLOR.WHITE_BLACK} />
       </TouchableOpacity>
     );
   };
@@ -48,28 +52,39 @@ export default function App() {
       {/* 정류소 번호, 이름, 방향 */}
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Margin height={20} />
-        <Text style={{ color: COLOR.WHITE, fontSize: 13 }}>{busStop.id}</Text>
+        <Text style={{ color: NEWCOLOR.WHITE_BLACK, fontSize: 13 }}>
+          {busStop.id}
+        </Text>
         <Margin height={4} />
-        <Text style={{ color: COLOR.WHITE, fontSize: 20 }}>{busStop.name}</Text>
+        <Text style={{ color: NEWCOLOR.WHITE_BLACK, fontSize: 20 }}>
+          {busStop.name}
+        </Text>
         <Margin height={4} />
-        <Text style={{ color: COLOR.GRAY_1, fontSize: 14 }}>
+        <Text style={{ color: NEWCOLOR.GRAY_1_GRAY_2, fontSize: 14 }}>
           {busStop.directionDescription}
         </Text>
         <Margin height={20} />
 
         <BookmarkButton
+          NEWCOLOR={NEWCOLOR}
           isBookmarked={busStop.isBookmarked}
           onPress={onPressBusStopBookmark}
           style={{
             borderWidth: 0.3,
-            borderColor: COLOR.GRAY_1,
+            borderColor: NEWCOLOR.GRAY_1_GRAY_4,
             borderRadius:
               (busStopBookmarkSize + busStopBookmarkPadding * 2) / 2,
             padding: busStopBookmarkPadding,
           }}
           size={busStopBookmarkSize}
         />
-        <Margin height={25} />
+        <Switch
+          value={isDark}
+          onValueChange={(v) => {
+            console.log("changed switch value", v);
+            toggleIsDark();
+          }}
+        />
       </View>
 
       {/* 북마크 */}
@@ -81,14 +96,16 @@ export default function App() {
       style={{
         paddingLeft: 13,
         paddingVertical: 3,
-        backgroundColor: COLOR.GRAY_1,
+        backgroundColor: NEWCOLOR.GRAY_1_GRAY_4,
         borderTopWidth: 0.5,
         borderBottomWidth: 0.5,
-        borderTopColor: COLOR.GRAY_2,
-        borderBottomColor: COLOR.GRAY_2,
+        borderTopColor: NEWCOLOR.GRAY_2_GRAY_3,
+        borderBottomColor: NEWCOLOR.GRAY_2_GRAY_3,
       }}
     >
-      <Text style={{ color: COLOR.GRAY_4, fontSize: 12 }}>{title}</Text>
+      <Text style={{ color: NEWCOLOR.GRAY_4_GRAY_1, fontSize: 12 }}>
+        {title}
+      </Text>
     </View>
   );
 
@@ -132,6 +149,7 @@ export default function App() {
      */
     return (
       <BusInfo
+        NEWCOLOR={NEWCOLOR}
         isBookmarked={bus.isBookmarked}
         onPress={null}
         num={bus.num}
@@ -145,7 +163,11 @@ export default function App() {
   const ItemSeparatorComponent = () => {
     return (
       <View
-        style={{ width: "100%", height: 1, backgroundColor: COLOR.GRAY_1 }}
+        style={{
+          width: "100%",
+          height: 1,
+          backgroundColor: NEWCOLOR.GRAY_1_GRAY_4,
+        }}
       ></View>
     );
   };
@@ -188,6 +210,7 @@ export default function App() {
         {/* 뒤로가기, 홈 아이콘 */}
         <View
           style={{
+            backgroundColor: COLOR.GRAY_3,
             flexDirection: "row",
             paddingTop: getStatusBarHeight(),
             justifyContent: "space-between",
@@ -201,7 +224,7 @@ export default function App() {
             position: "absolute",
             width: "100%",
             height: 500,
-            backgroundColor: COLOR.GRAY_3,
+            backgroundColor: NEWCOLOR.GRAY_3_GRAY_2,
             zIndex: -1,
           }}
         ></View>
@@ -226,7 +249,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
